@@ -16,17 +16,19 @@ const route = useRoute();
 
 //define state
 const image = ref("");
-const title = ref("");
-const content = ref("");
+const nama = ref("");
+const no_telp = ref("");
+const alamat = ref("");
 const errors = ref([]);
 
 //onMounted
 onMounted(async () => {
   //fetch detail data post by ID
-  await api.get(`/api/posts/${route.params.id}`).then((response) => {
+  await api.get(`/api/contact/${route.params.id}`).then((response) => {
     //set response data to state
-    title.value = response.data.data.title;
-    content.value = response.data.data.content;
+    nama.value = response.data.data.nama;
+    no_telp.value = response.data.data.no_telp;
+    alamat.value = response.data.data.alamat;
   });
 });
 
@@ -43,16 +45,17 @@ const updatePost = async () => {
 
   //assign state value to formData
   formData.append("image", image.value);
-  formData.append("title", title.value);
-  formData.append("content", content.value);
+  formData.append("nama", nama.value);
+  formData.append("no_telp", no_telp.value);
+  formData.append("alamat", alamat.value);
   formData.append("_method", "PATCH");
 
   //store data with API
   await api
-    .post(`/api/posts/${route.params.id}`, formData)
+    .post(`/api/contact/${route.params.id}`, formData)
     .then(() => {
       //redirect
-      router.push({ path: "/posts" });
+      router.push({ path: "/contact" });
     })
     .catch((error) => {
       //assign response error data to state "errors"
@@ -67,6 +70,8 @@ const updatePost = async () => {
       <div class="col-md-12">
         <div class="card border-0 rounded shadow">
           <div class="card-body">
+            <h1>Edit Data</h1>
+            <hr />
             <form @submit.prevent="updatePost()">
               <div class="mb-3">
                 <label class="form-label fw-bold">Image</label>
@@ -84,23 +89,35 @@ const updatePost = async () => {
                 <input
                   type="text"
                   class="form-control"
-                  v-model="title"
-                  placeholder="Title Post"
+                  v-model="nama"
+                  placeholder="Nama"
                 />
-                <div v-if="errors.title" class="alert alert-danger mt-2">
-                  <span>{{ errors.title[0] }}</span>
+                <div v-if="errors.nama" class="alert alert-danger mt-2">
+                  <span>{{ errors.nama[0] }}</span>
                 </div>
               </div>
               <div class="mb-3">
-                <label class="form-label fw-bold">Content</label>
+                <label class="form-label fw-bold">No Telepon</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="no_telp"
+                  placeholder="No Telepon"
+                />
+                <div v-if="errors.no_telp" class="alert alert-danger mt-2">
+                  <span>{{ errors.no_telp[0] }}</span>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">Alamat</label>
                 <textarea
                   class="form-control"
-                  v-model="content"
+                  v-model="alamat"
                   rows="5"
-                  placeholder="Content Post"
+                  placeholder="Alamat"
                 ></textarea>
-                <div v-if="errors.content" class="alert alert-danger mt-2">
-                  <span>{{ errors.content[0] }}</span>
+                <div v-if="errors.alamat" class="alert alert-danger mt-2">
+                  <span>{{ errors.alamat[0] }}</span>
                 </div>
               </div>
               <button

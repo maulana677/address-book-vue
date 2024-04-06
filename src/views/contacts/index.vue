@@ -6,31 +6,29 @@ import { ref, onMounted } from "vue";
 import api from "../../api";
 
 //define state
-const posts = ref([]);
+const contacts = ref([]);
 
 //method fetchDataPosts
-const fetchDataPosts = async () => {
+const fetchDataContacts = async () => {
   //fetch data
   await api
-    .get("/api/posts")
+    .get("/api/contact")
 
     .then((response) => {
-      posts.value = response.data.data.data;
+      contacts.value = response.data.data;
     });
 };
 
-//jalankan hook "onMounted"
 onMounted(() => {
   //memanggil method "fetchDataPosts"
-  fetchDataPosts();
+  fetchDataContacts();
 });
 
-//method deletePost
 const deletePost = async (id) => {
-  //hapus dengan API
-  await api.delete(`/api/posts/${id}`).then(() => {
+  //hapus post with API
+  await api.delete(`/api/contact/${id}`).then(() => {
     //memanggil method "fetchDataPosts"
-    fetchDataPosts();
+    fetchDataContacts();
   });
 };
 </script>
@@ -40,43 +38,58 @@ const deletePost = async (id) => {
     <div class="row">
       <div class="col-md-12">
         <router-link
-          :to="{ name: 'posts.create' }"
+          :to="{ name: 'contacts.create' }"
           class="btn btn-md btn-success rounded shadow border-0 mb-3"
           >ADD NEW POST</router-link
         >
+
+        <div class="col-md-6">
+          <input
+            type="text"
+            class="form-control mb-3"
+            placeholder="Cari..."
+            v-model="search"
+          />
+        </div>
+
         <div class="card border-0 rounded shadow">
           <div class="card-body">
             <table class="table table-bordered">
               <thead class="bg-dark text-white">
                 <tr>
                   <th scope="col">Image</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Content</th>
+                  <th scope="col">Nama</th>
+                  <th scope="col">No Telepon</th>
+                  <th scope="col">Alamat</th>
                   <th scope="col" style="width: 15%">Aksi</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-if="posts.length == 0">
-                  <td colspan="4" class="text-center">
+                <tr v-if="contacts.length == 0">
+                  <td colspan="5" class="text-center">
                     <div class="alert alert-danger mb-0">
                       Data Belum Tersedia!
                     </div>
                   </td>
                 </tr>
-                <tr v-else v-for="(post, index) in posts" :key="index">
+                <tr v-else v-for="(contact, index) in contacts" :key="index">
                   <td class="text-center">
-                    <img :src="post.image" width="200" class="rounded-3" />
+                    <img :src="contact.image" width="200" class="rounded-3" />
                   </td>
-                  <td>{{ post.title }}</td>
-                  <td>{{ post.content }}</td>
+                  <td>{{ contact.nama }}</td>
+                  <td>{{ contact.no_telp }}</td>
+                  <td>{{ contact.alamat }}</td>
                   <td class="text-center">
                     <router-link
-                      :to="{ name: 'posts.edit', params: { id: post.id } }"
+                      :to="{
+                        name: 'contacts.edit',
+                        params: { id: contact.id },
+                      }"
                       class="btn btn-sm btn-primary rounded-sm shadow border-0 me-2"
                       >EDIT</router-link
                     >
                     <button
-                      @click.prevent="deletePost(post.id)"
+                      @click.prevent="deletePost(contact.id)"
                       class="btn btn-sm btn-danger rounded-sm shadow border-0"
                     >
                       DELETE

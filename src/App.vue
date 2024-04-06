@@ -23,6 +23,14 @@
                 :to="{ name: 'posts.index' }"
                 class="nav-link active"
                 aria-current="page"
+                >POST</router-link
+              >
+            </li>
+            <li class="nav-item">
+              <router-link
+                :to="{ name: 'contacts.index' }"
+                class="nav-link active"
+                aria-current="page"
                 >CONTACT</router-link
               >
             </li>

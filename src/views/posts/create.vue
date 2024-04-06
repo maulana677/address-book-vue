@@ -12,10 +12,9 @@ import api from "../../api";
 const router = useRouter();
 
 //define state
-const nama = ref("");
-const no_telp = ref("");
-const alamat = ref("");
 const image = ref("");
+const title = ref("");
+const content = ref("");
 const errors = ref([]);
 
 //method for handle file changes
@@ -30,10 +29,9 @@ const storePost = async () => {
   let formData = new FormData();
 
   //assign state value to formData
-  formData.append("nama", nama.value);
-  formData.append("no_telp", no_telp.value);
-  formData.append("alamat", alamat.value);
   formData.append("image", image.value);
+  formData.append("title", title.value);
+  formData.append("content", content.value);
 
   //store data with API
   await api
@@ -68,39 +66,27 @@ const storePost = async () => {
                 </div>
               </div>
               <div class="mb-3">
-                <label class="form-label fw-bold">Nama</label>
+                <label class="form-label fw-bold">Title</label>
                 <input
                   type="text"
                   class="form-control"
-                  v-model="nama"
+                  v-model="title"
                   placeholder="Title Post"
                 />
-                <div v-if="errors.nama" class="alert alert-danger mt-2">
-                  <span>{{ errors.nama[0] }}</span>
+                <div v-if="errors.title" class="alert alert-danger mt-2">
+                  <span>{{ errors.title[0] }}</span>
                 </div>
               </div>
               <div class="mb-3">
-                <label class="form-label fw-bold">No Telepon</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  v-model="no_telp"
-                  placeholder="Title Post"
-                />
-                <div v-if="errors.no_telp" class="alert alert-danger mt-2">
-                  <span>{{ errors.no_telp[0] }}</span>
-                </div>
-              </div>
-              <div class="mb-3">
-                <label class="form-label fw-bold">Alamat</label>
+                <label class="form-label fw-bold">Content</label>
                 <textarea
                   class="form-control"
-                  v-model="alamat"
+                  v-model="content"
                   rows="5"
                   placeholder="Content Post"
                 ></textarea>
-                <div v-if="errors.alamat" class="alert alert-danger mt-2">
-                  <span>{{ errors.alamat[0] }}</span>
+                <div v-if="errors.content" class="alert alert-danger mt-2">
+                  <span>{{ errors.content[0] }}</span>
                 </div>
               </div>
               <button

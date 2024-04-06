@@ -22,6 +22,22 @@ const routes = [
         path: '/edit/:id',
         name: 'posts.edit',
         component: () => import( /* webpackChunkName: "edit" */ '../views/posts/edit.vue')
+    },
+
+    {
+        path: '/contacts',
+        name: 'contacts.index',
+        component: () => import( /* webpackChunkName: "index" */ '../views/contacts/index.vue')
+    },
+    {
+        path: '/create',
+        name: 'contacts.create',
+        component: () => import( /* webpackChunkName: "create" */ '../views/contacts/create.vue')
+    },
+    {
+        path: '/edit/:id',
+        name: 'contacts.edit',
+        component: () => import( /* webpackChunkName: "edit" */ '../views/contacts/edit.vue')
     }
 ]
 
