@@ -23,9 +23,7 @@ const errors = ref([]);
 
 //onMounted
 onMounted(async () => {
-  //fetch detail data post by ID
   await api.get(`/api/contact/${route.params.id}`).then((response) => {
-    //set response data to state
     nama.value = response.data.data.nama;
     no_telp.value = response.data.data.no_telp;
     alamat.value = response.data.data.alamat;
@@ -43,14 +41,12 @@ const updatePost = async () => {
   //init formData
   let formData = new FormData();
 
-  //assign state value to formData
   formData.append("image", image.value);
   formData.append("nama", nama.value);
   formData.append("no_telp", no_telp.value);
   formData.append("alamat", alamat.value);
   formData.append("_method", "PATCH");
 
-  //store data with API
   await api
     .post(`/api/contact/${route.params.id}`, formData)
     .then(() => {
@@ -58,7 +54,6 @@ const updatePost = async () => {
       router.push({ path: "/contact" });
     })
     .catch((error) => {
-      //assign response error data to state "errors"
       errors.value = error.response.data;
     });
 };

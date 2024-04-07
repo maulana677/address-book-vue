@@ -30,24 +30,18 @@ onMounted(async () => {
   });
 });
 
-//method for handle file changes
 const handleFileChange = (e) => {
-  //assign file to state
   image.value = e.target.files[0];
 };
 
-//method "updatePost"
 const updatePost = async () => {
-  //init formData
   let formData = new FormData();
 
-  //assign state value to formData
   formData.append("image", image.value);
   formData.append("title", title.value);
   formData.append("content", content.value);
   formData.append("_method", "PATCH");
 
-  //store data with API
   await api
     .post(`/api/posts/${route.params.id}`, formData)
     .then(() => {
@@ -55,7 +49,6 @@ const updatePost = async () => {
       router.push({ path: "/posts" });
     })
     .catch((error) => {
-      //assign response error data to state "errors"
       errors.value = error.response.data;
     });
 };

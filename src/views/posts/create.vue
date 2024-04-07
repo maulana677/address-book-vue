@@ -17,31 +17,23 @@ const title = ref("");
 const content = ref("");
 const errors = ref([]);
 
-//method for handle file changes
 const handleFileChange = (e) => {
-  //assign file to state
   image.value = e.target.files[0];
 };
 
-//method "storePost"
 const storePost = async () => {
-  //init formData
   let formData = new FormData();
 
-  //assign state value to formData
   formData.append("image", image.value);
   formData.append("title", title.value);
   formData.append("content", content.value);
 
-  //store data with API
   await api
     .post("/api/posts", formData)
     .then(() => {
-      //redirect
       router.push({ path: "/posts" });
     })
     .catch((error) => {
-      //assign response error data to state "errors"
       errors.value = error.response.data;
     });
 };

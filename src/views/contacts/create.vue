@@ -18,24 +18,20 @@ const no_telp = ref("");
 const alamat = ref("");
 const errors = ref([]);
 
-//method for handle file changes
+//method untuk perubahan file
 const handleFileChange = (e) => {
-  //assign file to state
   image.value = e.target.files[0];
 };
 
 //method "storePost"
 const storeContact = async () => {
-  //init formData
   let formData = new FormData();
 
-  //assign state value to formData
   formData.append("image", image.value);
   formData.append("nama", nama.value);
   formData.append("no_telp", no_telp.value);
   formData.append("alamat", alamat.value);
 
-  //store data with API
   await api
     .post("/api/contact", formData)
     .then(() => {
@@ -43,7 +39,6 @@ const storeContact = async () => {
       router.push({ path: "/contacts" });
     })
     .catch((error) => {
-      //assign response error data to state "errors"
       errors.value = error.response.data;
     });
 };
